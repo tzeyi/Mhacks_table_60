@@ -1,12 +1,10 @@
-URL = ''
-def changeURL(url:str):
-    URL = url
-
-##################################################################################################
-# In this section, we set the user authentication, user and app ID, model details, and the URL
+######################################################################################################
+# In this section, we set the user authentication, user and app ID, model details, and the location
 # of the image we want as an input. Change these strings to run your own example.
-#################################################################################################
-def call_IMG_recognition():
+#####################################################################################################
+
+def send_IMG_request(Filename):
+    "Sends a request to Clarifai through API with the current Filename. File must be in same folder as script"
     # Your PAT (Personal Access Token) can be found in the portal under Authentification
     PAT = 'a3b992f286c346cba91d70eb7be27532'
     # Specify the correct user_id/app_id pairings
@@ -16,7 +14,7 @@ def call_IMG_recognition():
     # Change these to whatever model and image URL you want to use
     MODEL_ID = 'food-item-recognition'
     MODEL_VERSION_ID = '1d5fd481e0cf4826aa72ec3ff049e044'
-    IMAGE_URL = URL
+    IMAGE_FILE_LOCATION = Filename
 
     ############################################################################
     # YOU DO NOT NEED TO CHANGE ANYTHING BELOW THIS LINE TO RUN THIS EXAMPLE
@@ -33,6 +31,9 @@ def call_IMG_recognition():
 
     userDataObject = resources_pb2.UserAppIDSet(user_id=USER_ID, app_id=APP_ID)
 
+    with open(IMAGE_FILE_LOCATION, "rb") as f:
+        file_bytes = f.read()
+
     post_model_outputs_response = stub.PostModelOutputs(
         service_pb2.PostModelOutputsRequest(
             user_app_id=userDataObject,  # The userDataObject is created in the overview and is required when using a PAT
@@ -42,7 +43,7 @@ def call_IMG_recognition():
                 resources_pb2.Input(
                     data=resources_pb2.Data(
                         image=resources_pb2.Image(
-                            url=IMAGE_URL
+                            base64=file_bytes
                         )
                     )
                 )
