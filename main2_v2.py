@@ -59,18 +59,22 @@ def send_IMG_request(Filename:str):
     output = post_model_outputs_response.outputs[0]
 
     print("Predicted concepts:")
+
     returnNames90 = []
     allNames = []
+    
     for concept in output.data.concepts:
         print("%s %.2f" % (concept.name, concept.value))
+    
         allNames.append(concept.name)
         if concept.value > 0.9:
             returnNames90.append(concept.name)
     
+    topTwo= allNames[0:2]
     if len(returnNames90) == 0:
-        return allNames
+        return ' '.join(topTwo)
     else:
-        return returnNames90
+        return ' '.join(returnNames90)
 
 
     # Uncomment this line to print the full Response JSON
