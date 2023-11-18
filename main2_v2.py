@@ -3,7 +3,7 @@
 # of the image we want as an input. Change these strings to run your own example.
 #####################################################################################################
 
-def send_IMG_request(Filename):
+def send_IMG_request(Filename:str):
     "Sends a request to Clarifai through API with the current Filename. File must be in same folder as script"
     # Your PAT (Personal Access Token) can be found in the portal under Authentification
     PAT = 'a3b992f286c346cba91d70eb7be27532'
@@ -59,8 +59,19 @@ def send_IMG_request(Filename):
     output = post_model_outputs_response.outputs[0]
 
     print("Predicted concepts:")
+    returnNames90 = []
+    allNames = []
     for concept in output.data.concepts:
         print("%s %.2f" % (concept.name, concept.value))
+        allNames.append(concept.name)
+        if concept.value > 0.9:
+            returnNames90.append(concept.name)
+    
+    if len(returnNames90) == 0:
+        return allNames
+    else:
+        return returnNames90
+
 
     # Uncomment this line to print the full Response JSON
     #print(output)
