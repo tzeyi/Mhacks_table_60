@@ -50,19 +50,15 @@ async function sendApiRequest(){
 
 }
 
-var calories
-
 function useApiData(data) {
     //bootstrap card
     document.querySelector('#generated-recipes').innerHTML = `
     <div>
-        <div class='filter'>
-            <label for="quantity" class="servings">Servings:</label>
-            <input type="number" class="servings" id="quantity" name="servings" min="1" max="25">
+        <div class='subtitle'>
+            <p> We detected </p>
         </div>
-        <div class='filter'>
-            <label for="quantity" class="servings">Calories:</label>
-            <input type="number" class="servings" id="quantity" name="servings" min="1" max="10000">
+        <div class='subtitle'>
+            <p> Here are some recommended recipes </p>
         </div>
     </div>
     <div class="scroll">

@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from model import send_IMG_request
+from model import *
 
 app = Flask(__name__)
 
@@ -14,7 +14,7 @@ def submit_form():
         url_input = request.form.get('url_input')
 
         # Do something with the input value (e.g., print it)
-        ingredients = send_IMG_request(url_input)
+        ingredients = send_URL(url_input)
         print("form submitted successfully")
 
         # Return a response (you can customize this)
@@ -24,6 +24,16 @@ def submit_form():
         print(f"An error occurred: {str(e)}")
         return jsonify({"error": "Internal Server Error"}), 500
 
+@app.route('/upload', methods=['POST'])
+def upload():
+    fileinput = request.files['image-upload']
+
+    
+    fileinput.save('uploads/' + fileinput.filename)
+    send_IMG_request(getFile())
+        #return 'File uploaded successfully!'
+    #else:
+        #return 'No file selected.'
 
 if __name__ == "__main__":
     app.run(debug = True)

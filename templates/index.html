@@ -51,6 +51,37 @@
                  <div style="text-align: center;">
                     <p class="subtitle">
                 </div>
+                <div style="text-align: center;">
+                    <p class="subtitle">
+                        or
+                    </p>
+                    <p class="subtitle">
+                        Upload an Image
+                    </p>
+                 </div>
+                <div style="align-items: center">
+                    <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+                        <input type="file" id="file-input" name="image-upload" accept="image/*" onchange="displayFileNames(this)" multiple>
+                        <label for="file-input" class="dotted-border upload-button"><img src="{{ url_for('static', filename='Images/uploadbutton.png') }}" alt="Upload Image"></label><br>
+                        <div style="align-items: center" class="file-list" id="file-list"></div>
+                        <input type="submit" value="Upload">
+                    </form>
+                    <script>
+                        function displayFileNames(input) {
+                          const fileList = document.getElementById('file-list');
+                          fileList.innerHTML = '';
+                    
+                          if (input.files.length > 0) {
+                            for (let i = 0; i < input.files.length; i++) {
+                              const fileName = document.createElement('p');
+                              fileName.textContent = input.files[i].name;
+                              fileList.appendChild(fileName);
+                            }
+                          } else {
+                            fileList.textContent = 'No files chosen';
+                          }
+                        }
+                      </script>
     </section>
 
     <section style = "padding-top: 15%">
