@@ -8,6 +8,11 @@ from clarifai_grpc.grpc.api import resources_pb2, service_pb2, service_pb2_grpc
 from clarifai_grpc.grpc.api.status import status_code_pb2
 import requests
 from io import BytesIO
+import os
+
+def getFile():
+    return './uploads/' + os.listdir('./uploads')[0]
+
 
 def send_IMG_request(image_url:str):
     "Sends a request to Clarifai through API with the current Filename. File must be in same folder as script"
